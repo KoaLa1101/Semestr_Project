@@ -2,6 +2,7 @@ package ru.ITLab.repositories;
 
 import ru.ITLab.modules.User;
 
+import javax.servlet.jsp.jstl.sql.SQLExecutionTag;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,12 +14,14 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     private DataSource dataSource;
 
     //language=SQL
-    private final static String SQL_INSERT = "insert into account(email, hpassword, firstName, lastName, age) " +
-            "values (?, ?, ?, ?, ?, ?)";
+    private final static String SQL_INSERT = "insert into users(firstName, lastName, email, hashPassword, dateOfBirth) " +
+            "values (?, ?, ?, ?, ?)";
     private final static String SQL_GET_USER_BY_FNANDLN = "select * from users where firstName=? and lastName=?";
     private final static String SQL_GET_ALL = "select * from users";
     private final static String SQL_GET_USER_BY_EMAIL = "select * from users where email=?";
     private final static String SQL_GET_USER_BY_ID = "select * from users where id=?";
+    private final static String SQL_DELETE_USER = "delete from users where id=?";
+    private final static String SQL_CHANGE_NAME = "update users set ";
 
     public UsersRepositoryJdbcImpl(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -26,18 +29,18 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 
 
     @Override
-    public void save(User entity) {
+    public void save(User user) {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet generatedKeys = null;
         try {
             connection = dataSource.getConnection();
-            statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS );
-            statement.setString(1, entity.getFirstName());
-            statement.setString(2, entity.getLastName());
-            statement.setShort(3, entity.getAge());
-            statement.setString(3, entity.getEmail());
-            statement.setString(4, entity.getHashPassword());
+            statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getLastName());
+            statement.setDate(5, new java.sql.Date(user.getDateOfBirth().getYear(), user.getDateOfBirth().getMonth(), user.getDateOfBirth().getDay()));
+            statement.setString(3, user.getEmail());
+            statement.setString(4, user.getHashPassword());
             int affectedRows = statement.executeUpdate();
 
             if (affectedRows == 0) {
@@ -47,7 +50,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
             generatedKeys = statement.getGeneratedKeys();
 
             if (generatedKeys.next()) {
-                entity.setId(generatedKeys.getLong("id"));
+                user.setId(generatedKeys.getLong("id"));
             } else {
                 throw new SQLException("Problem with retrieve id");
             }
@@ -89,24 +92,24 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
             statement.setString(1, firstName);
             statement.setString(2, lastName);
 
-            try(ResultSet isUserByFirstNameAndLastName = statement.executeQuery()){
-                if(isUserByFirstNameAndLastName.next()){
+            try (ResultSet isUserByFirstNameAndLastName = statement.executeQuery()) {
+                if (isUserByFirstNameAndLastName.next()) {
                     User user = User.builder().id(isUserByFirstNameAndLastName.getLong("id"))
                             .firstName(isUserByFirstNameAndLastName.getString("firstName"))
                             .lastName(isUserByFirstNameAndLastName.getString("lastName"))
                             .email(isUserByFirstNameAndLastName.getString("email"))
                             .dateOfBirth(isUserByFirstNameAndLastName.getDate("dateOfBirth"))
-                            .hashPassword(isUserByFirstNameAndLastName.getString("hash_password")).build();
+                            .hashPassword(isUserByFirstNameAndLastName.getString("hashPassword")).build();
                     userByFirstNameAndLastName = Optional.of(user);
                 }
             }
-        } catch (SQLException throwables){
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
             try {
-                if(statement!=null) statement.close();
-                if(connection!=null) connection.close();
-            } catch (SQLException throwables){
+                if (statement != null) statement.close();
+                if (connection != null) connection.close();
+            } catch (SQLException throwables) {
             }
         }
         return userByFirstNameAndLastName;
@@ -130,7 +133,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
                             .lastName(isUserByEmail.getString("lastName"))
                             .email(isUserByEmail.getString("email"))
                             .dateOfBirth(isUserByEmail.getDate("dateOfBirth"))
-                            .hashPassword(isUserByEmail.getString("hash_password")).build();
+                            .hashPassword(isUserByEmail.getString("hashPassword")).build();
                     userByEmail = Optional.of(user);
                 }
             }
@@ -165,7 +168,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
                             .lastName(setOfAllUsers.getString("lastName"))
                             .email(setOfAllUsers.getString("email"))
                             .dateOfBirth(setOfAllUsers.getDate("dateOfBirth"))
-                            .hashPassword(setOfAllUsers.getString("hash_password")).build();
+                            .hashPassword(setOfAllUsers.getString("hashPassword")).build();
                     allUsers.add(user);
                 }
             }
@@ -199,7 +202,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
                             .lastName(isUserByID.getString("lastName"))
                             .email(isUserByID.getString("email"))
                             .dateOfBirth(isUserByID.getDate("dateOfBirth"))
-                            .hashPassword(isUserByID.getString("hash_password")).build();
+                            .hashPassword(isUserByID.getString("hashPassword")).build();
                     userByID = Optional.of(user);
                 }
             }
@@ -218,16 +221,61 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
 
     @Override
     public void update(User enity) {
+        Connection connection = null;
+        PreparedStatement statement = null;
 
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(SQL_CHANGE_NAME, Statement.RETURN_GENERATED_KEYS);
+            statement.setString(1, enity.getFirstName());
+            statement.setString(2, enity.getLastName());
+
+            int affectedRows = statement.executeUpdate();
+
+            if(affectedRows == 0){
+                throw new SQLException("Problem with change user");
+            }
+        }
+        catch (SQLException e){
+            throw new IllegalStateException(e);
+        } finally {
+            try {
+                if(statement != null) statement.close();
+                if(connection != null) connection.close();
+            } catch (SQLException throwables){
+            }
+        }
     }
 
     @Override
     public void deleteById(Long id) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = dataSource.getConnection();
+            statement = connection.prepareStatement(SQL_DELETE_USER, Statement.RETURN_GENERATED_KEYS);
+            statement.setLong(1,id);
+            int affectedRows = statement.executeUpdate();
+
+            if(affectedRows == 0){
+                throw new SQLException("Problem with delete user");
+            }
+        }
+        catch (SQLException e){
+            throw new IllegalStateException(e);
+        } finally {
+            try {
+                if(statement != null) statement.close();
+                if(connection != null) connection.close();
+            } catch (SQLException throwables){
+            }
+        }
 
     }
 
     @Override
     public void delete(User enity) {
-
+        deleteById(enity.getId());
     }
 }

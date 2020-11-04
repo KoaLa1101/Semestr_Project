@@ -26,7 +26,7 @@ public class SignInServiceImpl implements SignInService {
         if ((user = usersRepository.getUserByEmail(email)).isPresent() && passwordEncoder.matches(password, user.get().getHashPassword())) {
             return user.get().getId();
         } else {
-            return (long) -1;
+            return (long) -2;
         }
     }
 
