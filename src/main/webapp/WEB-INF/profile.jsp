@@ -12,16 +12,18 @@
     <title>Forum - home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
           integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
-    <link  rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 </head>
-<body >
+<body>
 
 <!--navigation-->
 <nav class="navbar sticky-top navbar-expand-lg navbar-light">
     <div class="container-fluid" style="background-color: aliceblue">
-        <a href="${pageContext.request.contextPath}/" class="navbar-brand ml-3" style="color: blue">Forum for KFU students</a>
+        <a href="${pageContext.request.contextPath}/" class="navbar-brand ml-3" style="color: blue">Forum for KFU
+            students</a>
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
@@ -30,10 +32,12 @@
                     <a class="btn btn-link ml-auto" href="" role="button">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-link ml-auto" href="${pageContext.request.contextPath}/forum" role="button">Forum</a>
+                    <a class="btn btn-link ml-auto" href="${pageContext.request.contextPath}/forum"
+                       role="button">Forum</a>
                 </li>
                 <li class="nav-item">
-                    <a class="btn btn-link ml-auto" href="${pageContext.request.contextPath}/about" role="button">About us</a>
+                    <a class="btn btn-link ml-auto" href="${pageContext.request.contextPath}/about" role="button">About
+                        us</a>
                 </li>
                 <li class="nav-item">
                     <a class="btn btn-link ml-auto" href="${pageContext.request.contextPath}/members" role="button">Members</a>
@@ -41,8 +45,11 @@
             </ul>
             <c:if test="${pageContext.session.getAttribute('id') == null}">
                 <div class="d-flex justify-content-start">
-                    <button class="btn btn-outline-dark my-3" data-toggle="modal" data-target="#signInModal">Sign in</button>
-                    <button class="btn btn-outline-dark my-3 ml-3" data-toggle="modal" data-target="#signUpModal">Sign up</button>
+                    <button class="btn btn-outline-dark my-3" data-toggle="modal" data-target="#signInModal">Sign in
+                    </button>
+                    <button class="btn btn-outline-dark my-3 ml-3" data-toggle="modal" data-target="#signUpModal">Sign
+                        up
+                    </button>
                 </div>
             </c:if>
             <c:if test="${pageContext.session.getAttribute('id')!=null}">
@@ -55,7 +62,8 @@
 </nav>
 
 <!--Modals-->
-<div class="modal fade" id="signInModal" role="dialog" tabindex="-1" aria-labelledby="signInModalLabel" aria-hidden="true">
+<div class="modal fade" id="signInModal" role="dialog" tabindex="-1" aria-labelledby="signInModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -74,7 +82,8 @@
                     <div class="row mb-3">
                         <label for="inputPasswordSignIn" class="col-sm-4 col-form-label">Password</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPasswordSignIn" name="password" required>
+                            <input type="password" class="form-control" id="inputPasswordSignIn" name="password"
+                                   required>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-outline-primary my-3">Authorization</button>
@@ -84,7 +93,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="signUpModal" role="dialog" tabindex="-1" aria-labelledby="signUpModalLabel" aria-hidden="true">
+<div class="modal fade" id="signUpModal" role="dialog" tabindex="-1" aria-labelledby="signUpModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -115,7 +125,8 @@
                     <div class="row mb-3">
                         <label for="inputPasswordSignUp" class="col-sm-4 col-form-label">Password</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPasswordSignUp" name="password" required>
+                            <input type="password" class="form-control" id="inputPasswordSignUp" name="password"
+                                   required>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -146,7 +157,8 @@
     </div>
 </div>
 
-<div class="modal fade" id="createPost" role="dialog" tabindex="-1" aria-labelledby="createPostLabel" aria-hidden="true">
+<div class="modal fade" id="createPost" role="dialog" tabindex="-1" aria-labelledby="createPostLabel"
+     aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -178,22 +190,31 @@
 <!--Main-->
 <main class="vh-100 bg-gradient-primary" style="background-color: darkblue">
     <div class="d-flex  align-items-center justify-content-center ml-3 mr-3">
-        <div class="vh-100 d-flex flex-column align-items-center justify-content-center h4" style="background-color: aliceblue; width: 20%; ">
+        <div class="vh-100 d-flex flex-column align-items-center justify-content-center h4"
+             style="background-color: aliceblue; width: 20%; ">
             <img src="/img/profile-icon.webp" style="position: relative; height: 100px; width: 100px">
             <p class="ml-3 mr-3">${pageContext.request.session.getAttribute('firstName')} ${pageContext.request.session.getAttribute('lastName')}</p>
-            <a class="btn btn-link btn-outline-primary btn-lg ml-auto mr-auto" href="${pageContext.request.contextPath}/profileEdit" role="button">Edit profile</a>
+            <a class="btn btn-link btn-outline-primary btn-lg ml-auto mr-auto"
+               href="${pageContext.request.contextPath}/profileEdit" role="button">Edit profile</a>
             <br> <br>
-            <a class="btn btn-link btn-lg ml-auto mr-auto" href="${pageContext.request.contextPath}/myPosts" role="button">My posts</a>
-            <button class="btn btn-link btn-lg ml-auto mr-auto" role="button" data-toggle="modal" data-target="#createPost">Create new post</button>
-            <a class="btn btn-link btn-lg ml-auto mr-auto" href="${pageContext.request.contextPath}/signOut" role="button">Sign out</a>
+            <a class="btn btn-link btn-lg ml-auto mr-auto" href="${pageContext.request.contextPath}/myPosts"
+               role="button">My posts</a>
+            <button class="btn btn-link btn-lg ml-auto mr-auto" role="button" data-toggle="modal"
+                    data-target="#createPost">Create new post
+            </button>
+            <a class="btn btn-link btn-lg ml-auto mr-auto" href="${pageContext.request.contextPath}/signOut"
+               role="button">Sign out</a>
 
         </div>
 
-        <div class="d-flex flex-column ml-3 mr-3" style="background-color: aliceblue">
+        <div class="d-flex flex-column ml-3 mr-3" id="" style="background-color: aliceblue">
             <h3>Your last post</h3>
-            <p class="font-weight-light ml-3 mr-3">0 (yours likes)      0 (commentaries)</p>
+            <p class="font-weight-light ml-3 mr-3">0 (yours likes) 0 (commentaries)</p>
             <hr>
-            <p class="ml-3 mr-3">Here u can see your post</p>
+            <div id="lastPost">
+                <h4 class="ml-3 mr-3">Name of post</h4>
+                <p class="ml-3 mr-3">Here u can see your post</p>
+            </div>
 
         </div>
     </div>
@@ -205,7 +226,7 @@
         <c:when test="${pageContext.request.session.getAttribute('error') =='-1'}">
             <script>
                 console.log("Error = -1");
-                window.onload = function (){
+                window.onload = function () {
                     alert("User with this email doesn't exist");
                 }
             </script>
@@ -213,7 +234,7 @@
         <c:when test="${pageContext.request.session.getAttribute('error') == '-2'}">
             <script>
                 console.log("Error = -2");
-                window.onload = function (){
+                window.onload = function () {
                     alert("Wrong login or password");
                 }
             </script>
@@ -221,7 +242,9 @@
     </c:choose>
 </c:if>
 
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js" integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
-<script src="${pageContext.request.contextPath}/js/index.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"
+        integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD"
+        crossorigin="anonymous"></script>
+<script src="${pageContext.request.contextPath}/js/post.js"></script>
 </body>
 </html>

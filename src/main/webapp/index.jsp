@@ -115,13 +115,13 @@
                     <div class="row mb-3">
                         <label for="inputPasswordSignUp" class="col-sm-4 col-form-label">Password</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPasswordSignUp" name="password" required>
+                            <input type="password" class="form-control" id="inputPasswordSignUp" name="password" required pattern="^(?=.*[A-Z].*[A-Z])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{6,}$">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputPasswordRepeatSignUp" class="col-sm-4 col-form-label">Repeat password</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPasswordRepeatSignUp" required>
+                            <input type="password" class="form-control" id="inputPasswordRepeatSignUp" required pattern="^(?=.*[A-Z].*[A-Z])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{6,}$">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -177,6 +177,6 @@
 </c:if>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js" integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
-<script src="${pageContext.request.contextPath}/js/index.js"></script>
+<script src="/js/index.js" type="text/javascript"></script>
 </body>
 </html>

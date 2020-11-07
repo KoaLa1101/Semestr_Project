@@ -1,11 +1,7 @@
 package ru.ITLab.listeners;
 
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import ru.ITLab.dto.CreatePostForm;
-import ru.ITLab.repositories.PostRepository;
-import ru.ITLab.repositories.PostRepositoryJdbcImpl;
-import ru.ITLab.repositories.UsersRepository;
-import ru.ITLab.repositories.UsersRepositoryJdbcImpl;
+import ru.ITLab.repositories.*;
 import ru.ITLab.services.*;
 
 import javax.servlet.ServletContext;
@@ -38,6 +34,8 @@ public class MyServletContextListener implements ServletContextListener {
         UserService userService = new UserServiceImpl(usersRepository);
         CreatePostService createPostService = new CreatePostServiceImpl(postRepository);
         GetPostService getPostService = new GetPostServiceImpl(postRepository);
+        CommentRepository commentRepository = new CommentRepositoryJdbcImpl(dataSource);
+        CreateCommentService createCommentService = new CreateCommentServiceImpl(commentRepository);
 
         servletContext.setAttribute("signInService", signInService);
         servletContext.setAttribute("signUpService", signUpService);
@@ -45,6 +43,7 @@ public class MyServletContextListener implements ServletContextListener {
         servletContext.setAttribute("baseContext", BASE_CONTEXT);
         servletContext.setAttribute("createPostService", createPostService);
         servletContext.setAttribute("getPostService", getPostService);
+        servletContext.setAttribute("createCommentService", createCommentService);
 
     }
 

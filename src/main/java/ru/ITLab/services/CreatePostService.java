@@ -3,5 +3,5 @@ package ru.ITLab.services;
 import ru.ITLab.dto.CreatePostForm;
 
 public interface CreatePostService {
-    Long createPost(CreatePostForm createPostForm);
+    Object createPost(CreatePostForm createPostForm);
 }

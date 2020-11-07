@@ -38,7 +38,7 @@ public class PostRepositoryJdbcImpl implements PostRepository {
                 while (setOfAllPosts.next()) {
                     Post post = Post.builder().id(setOfAllPosts.getLong("id"))
                             .name(setOfAllPosts.getString("name"))
-                            .comment_id(setOfAllPosts.getLong("comment_id"))
+                            .comment_id((Long[]) setOfAllPosts.getArray("comment_id").getArray())
                             .user_id(setOfAllPosts.getLong("user_id"))
                             .nameHost(setOfAllPosts.getString("nameHost"))
                             .text(setOfAllPosts.getString("text")).build();
@@ -73,7 +73,7 @@ public class PostRepositoryJdbcImpl implements PostRepository {
                     Post post = Post.builder().id(isPostById.getLong("id"))
                             .name(isPostById.getString("name"))
                             .user_id(isPostById.getLong("user_id"))
-                            .comment_id(isPostById.getLong("comment-id"))
+                            .comment_id((Long[]) isPostById.getArray("comment_id").getArray())
                             .nameHost(isPostById.getString("nameHost"))
                             .text(isPostById.getString("text")).build();
                     postById = Optional.of(post);
@@ -108,7 +108,7 @@ public class PostRepositoryJdbcImpl implements PostRepository {
                     Post post = Post.builder().id(isPostByName.getLong("id"))
                             .name(isPostByName.getString("name"))
                             .user_id(isPostByName.getLong("user_id"))
-                            .comment_id(isPostByName.getLong("comment-id"))
+                            .comment_id((Long[]) isPostByName.getArray("comment_id").getArray())
                             .nameHost(isPostByName.getString("nameHost"))
                             .text(isPostByName.getString("text")).build();
                     postByName = Optional.of(post);
@@ -139,19 +139,18 @@ public class PostRepositoryJdbcImpl implements PostRepository {
             statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, enity.getName());
             statement.setLong(2, enity.getUser_id());
-            statement.setLong(3, enity.getComment_id());
+            statement.setArray(3, connection.createArrayOf("bigint", enity.getComment_id()));
             statement.setString(4, enity.getNameHost());
             statement.setString(5, enity.getText());
 
             int affectedRows = statement.executeUpdate();
-
             if (affectedRows == 0) {
-                throw new SQLException("Problem with insert user");
+                throw new SQLException("Problem with insert post");
             }
 
             generatedKeys = statement.getGeneratedKeys();
-
             if (generatedKeys.next()) {
+
                 enity.setId(generatedKeys.getLong("id"));
             } else {
                 throw new SQLException("Problem with retrieve id");
@@ -217,7 +216,7 @@ public class PostRepositoryJdbcImpl implements PostRepository {
                 while (setOfAllPostsByUser.next()) {
                     Post post = Post.builder().id(setOfAllPostsByUser.getLong("id"))
                             .name(setOfAllPostsByUser.getString("name"))
-                            .comment_id(setOfAllPostsByUser.getLong("comment_id"))
+                            .comment_id((Long[]) setOfAllPostsByUser.getArray("comment_id").getArray())
                             .user_id(setOfAllPostsByUser.getLong("user_id"))
                             .nameHost(setOfAllPostsByUser.getString("nameHost"))
                             .text(setOfAllPostsByUser.getString("text")).build();

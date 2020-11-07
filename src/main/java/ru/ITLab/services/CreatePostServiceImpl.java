@@ -15,6 +15,7 @@ public class CreatePostServiceImpl implements CreatePostService {
     @Override
     public Long createPost(CreatePostForm form) {
         String name = form.getName();
+        System.out.println(name);
 
         if (!postRepository.findByName(name).isPresent()) {
             Post post = Post.builder()
@@ -24,9 +25,8 @@ public class CreatePostServiceImpl implements CreatePostService {
                     .nameHost(form.getNameHost())
                     .text(form.getText()).build();
             postRepository.save(post);
-            return post.getId();
+            return postRepository.findByName(name).get().getId();
         } else {
-            System.out.println("Я отдал -3");
             return (long) -3;
         }
     }

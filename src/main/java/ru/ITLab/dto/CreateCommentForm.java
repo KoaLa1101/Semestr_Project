@@ -1,5 +1,8 @@
 package ru.ITLab.dto;
 
+import lombok.Data;
+
+@Data
 public class CreateCommentForm {
     private Long id;
     private Long user_id;
