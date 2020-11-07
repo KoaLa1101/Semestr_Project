@@ -26,7 +26,6 @@ document.addEventListener('DOMContentLoaded', function (){
         let html = '<ul class="list-group list-group-flush overflow-y">';
 
         for (let i=1; i<=result.length; i++){
-            console.log(showAllUsersTmp[showAllUsersTmp.length-1][0]);
             html += '<li class="d-flex ml-3 mr-3" data-toggle="modal" data-target="#membersModal"><p>'+ showAllUsersTmp[showAllUsersTmp.length-i][0] + ' ' + showAllUsersTmp[showAllUsersTmp.length-i][1] + ' (' + showAllUsersTmp[showAllUsersTmp.length-i][2] + ')</p></li>\n';
         }
         html += '</ul>';
