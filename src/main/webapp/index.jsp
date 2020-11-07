@@ -115,13 +115,13 @@
                     <div class="row mb-3">
                         <label for="inputPasswordSignUp" class="col-sm-4 col-form-label">Password</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPasswordSignUp" name="password" required pattern="^(?=.*[A-Z].*[A-Z])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{6,}$">
+                            <input type="password" class="form-control" id="inputPasswordSignUp" name="password" required pattern="^(?=.*[A-Z].*[A-Z])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,}$">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputPasswordRepeatSignUp" class="col-sm-4 col-form-label">Repeat password</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPasswordRepeatSignUp" required pattern="^(?=.*[A-Z].*[A-Z])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{6,}$">
+                            <input type="password" class="form-control" id="inputPasswordRepeatSignUp">
                         </div>
                     </div>
                     <div class="row mb-3">

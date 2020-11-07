@@ -3,6 +3,7 @@ package ru.ITLab.services;
 import ru.ITLab.modules.User;
 import ru.ITLab.repositories.UsersRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserServiceImpl implements UserService{
@@ -20,4 +21,11 @@ public class UserServiceImpl implements UserService{
         }
         return Optional.empty();
     }
+
+    @Override
+    public List<User> getAllUsers() {
+        List<User> allUsers = usersRepository.findAll();
+        return allUsers;
+    }
+
 }

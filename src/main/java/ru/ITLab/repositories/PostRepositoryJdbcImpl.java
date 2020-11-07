@@ -150,7 +150,6 @@ public class PostRepositoryJdbcImpl implements PostRepository {
 
             generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
-
                 enity.setId(generatedKeys.getLong("id"));
             } else {
                 throw new SQLException("Problem with retrieve id");
