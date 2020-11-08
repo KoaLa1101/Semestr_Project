@@ -13,7 +13,7 @@ public class CommentRepositoryJdbcImpl implements CommentRepository {
     private DataSource dataSource;
 
     //language-SQL
-    private final static String SQL_INSERT = "insert into comments(user_id, post_id, nameHost, text, namePost) values(?, ?, ?, ?, ?)";
+    private final static String SQL_INSERT = "insert into comments(user_id, post_id, nameHost, text, postName) values(?, ?, ?, ?, ?)";
     private final static String SQL_GET_ALL = "select * from comments";
     private final static String SQL_GET_COMMENT_BY_ID = "select * from comments where id=?";
     private final static String SQL_GET_COMMENT_BY_POSTNAME = "select * from comments where postName=?";
@@ -25,25 +25,25 @@ public class CommentRepositoryJdbcImpl implements CommentRepository {
     }
 
     @Override
-    public Optional<Comment> getByPostName(String postName) {
+    public List<Comment> getByPostName(String postName) {
         Connection connection = null;
         PreparedStatement statement = null;
-        Optional<Comment> commentByPostName = Optional.empty();
+        List<Comment> commentByPostName = new ArrayList<>();
 
         try {
             connection = dataSource.getConnection();
             statement = connection.prepareStatement(SQL_GET_COMMENT_BY_POSTNAME);
-            statement.setString(1, "postName");
+            statement.setString(1, postName);
 
             try (ResultSet isCommentByPostName = statement.executeQuery()){
                 while (isCommentByPostName.next()) {
                     Comment comment = Comment.builder().id(isCommentByPostName.getLong("id"))
-                            .namePost(isCommentByPostName.getString("namePost"))
+                            .postName(isCommentByPostName.getString("postName"))
                             .post_id(isCommentByPostName.getLong("post_id"))
                             .user_id(isCommentByPostName.getLong("user_id"))
                             .nameHost(isCommentByPostName.getString("nameHost"))
                             .text(isCommentByPostName.getString("text")).build();
-                    commentByPostName = Optional.of(comment);
+                    commentByPostName.add(comment);
                 }
             }
         }
@@ -60,10 +60,10 @@ public class CommentRepositoryJdbcImpl implements CommentRepository {
     }
 
     @Override
-    public Optional<Comment> getByUserId(Long user_id) {
+    public List<Comment> getByUserId(Long user_id) {
         Connection connection = null;
         PreparedStatement statement = null;
-        Optional<Comment> commentByUserId = Optional.empty();
+        List<Comment> commentByUserId = new ArrayList<>();
 
         try {
             connection = dataSource.getConnection();
@@ -73,12 +73,12 @@ public class CommentRepositoryJdbcImpl implements CommentRepository {
             try (ResultSet isCommentByUserId = statement.executeQuery()){
                 while (isCommentByUserId.next()) {
                     Comment comment = Comment.builder().id(isCommentByUserId.getLong("id"))
-                            .namePost(isCommentByUserId.getString("namePost"))
+                            .postName(isCommentByUserId.getString("postName"))
                             .post_id(isCommentByUserId.getLong("post_id"))
                             .user_id(isCommentByUserId.getLong("user_id"))
                             .nameHost(isCommentByUserId.getString("nameHost"))
                             .text(isCommentByUserId.getString("text")).build();
-                    commentByUserId = Optional.of(comment);
+                    commentByUserId.add(comment);
                 }
             }
         }
@@ -107,7 +107,7 @@ public class CommentRepositoryJdbcImpl implements CommentRepository {
             try (ResultSet setOfAllComments = statement.executeQuery()) {
                 while (setOfAllComments.next()) {
                     Comment comment = Comment.builder().id(setOfAllComments.getLong("id"))
-                            .namePost(setOfAllComments.getString("namePost"))
+                            .postName(setOfAllComments.getString("postName"))
                             .post_id(setOfAllComments.getLong("post_id"))
                             .user_id(setOfAllComments.getLong("user_id"))
                             .nameHost(setOfAllComments.getString("nameHost"))
@@ -141,7 +141,7 @@ public class CommentRepositoryJdbcImpl implements CommentRepository {
             try (ResultSet isCommentById = statement.executeQuery()) {
                 if (isCommentById.next()) {
                     Comment comment = Comment.builder().id(isCommentById.getLong("id"))
-                            .namePost(isCommentById.getString("namePost"))
+                            .postName(isCommentById.getString("postName"))
                             .post_id(isCommentById.getLong("post_id"))
                             .user_id(isCommentById.getLong("user_id"))
                             .nameHost(isCommentById.getString("nameHost"))
@@ -175,7 +175,7 @@ public class CommentRepositoryJdbcImpl implements CommentRepository {
             statement.setLong(2, enity.getPost_id());
             statement.setString(3, enity.getNameHost());
             statement.setString(4, enity.getText());
-            statement.setString(5, enity.getNamePost());
+            statement.setString(5, enity.getPostName());
 
             int affectedRows = statement.executeUpdate();
 

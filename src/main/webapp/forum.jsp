@@ -157,11 +157,20 @@
     </div>
 </div>
 <main>
-    <div class="d-flex justify-content-center">
-        <ul>
-            <li class="ml-3 mr-3" id="allMembers">User</li>
-        </ul>
+    <div class="d-flex justify-content-center" id="allPosts">
+
     </div>
 </main>
+<footer class="page-footer font-small blue fixed-bottom ml-3" style="position: absolute; background-color: cornflowerblue">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+        <a href="https://vk.com/koala1101"> vk.com/koala1101</a>
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js" integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
+<script src="/js/forum.js" type="text/javascript"></script>
 </body>
 </html>

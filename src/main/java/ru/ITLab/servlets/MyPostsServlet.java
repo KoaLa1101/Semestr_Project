@@ -2,8 +2,9 @@ package ru.ITLab.servlets;
 
 import org.json.JSONArray;
 import ru.ITLab.modules.Post;
-import ru.ITLab.repositories.PostRepository;
+import ru.ITLab.modules.User;
 import ru.ITLab.services.GetPostService;
+import ru.ITLab.services.UserService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -16,35 +17,38 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-@WebServlet("/showPost")
-public class ShowPostServlet extends HttpServlet {
+@WebServlet("/myPosts")
+public class MyPostsServlet extends HttpServlet {
     private GetPostService getPostService;
+    private UserService userService;
     private String BASE_CONTEXT;
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(BASE_CONTEXT);
+        Optional<User> user;
+        if (req.getSession(false) != null && req.getSession(false).getAttribute("id") != null) {
+            user = userService.getUserInfo((Long) req.getSession(false).getAttribute("id"));
+            if (user.isPresent()) {
+                req.getRequestDispatcher("/WEB-INF/allMyPosts.jsp").forward(req, resp);
+            } else {
+                resp.sendRedirect(BASE_CONTEXT + "sign_in");
+            }
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        Long id = (Long) session.getAttribute("id");
-        List<Post> allPostsByUser = getPostService.getAllPostsByUser(id);
+        List<Post> allPosts = getPostService.getAllPostsByUser((Long) session.getAttribute("id"));
         JSONArray arr1 = new JSONArray();
 
-        for(Post post : allPostsByUser) {
+        for (Post post : allPosts) {
             JSONArray arr = new JSONArray();
-            arr.put(post.getId());
             arr.put(post.getName());
-            arr.put(post.getComment_id());
-            arr.put(post.getUser_id());
-            arr.put(post.getNameHost());
             arr.put(post.getText());
-
+            arr.put(post.getId());
             arr1.put(arr);
         }
 
@@ -61,5 +65,6 @@ public class ShowPostServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         BASE_CONTEXT = (String) config.getServletContext().getAttribute("baseContext");
         getPostService = (GetPostService) config.getServletContext().getAttribute("getPostService");
+        userService = (UserService) config.getServletContext().getAttribute("userService");
     }
 }

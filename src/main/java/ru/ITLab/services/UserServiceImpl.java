@@ -1,5 +1,6 @@
 package ru.ITLab.services;
 
+import ru.ITLab.dto.EditProfileForm;
 import ru.ITLab.modules.User;
 import ru.ITLab.repositories.UsersRepository;
 
@@ -26,6 +27,11 @@ public class UserServiceImpl implements UserService{
     public List<User> getAllUsers() {
         List<User> allUsers = usersRepository.findAll();
         return allUsers;
+    }
+
+    @Override
+    public void changeProfile(EditProfileForm form) {
+        usersRepository.update(User.builder().id(form.getId()).firstName(form.getFirstName()).lastName(form.getLastName()).build());
     }
 
 }

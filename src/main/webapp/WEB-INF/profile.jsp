@@ -187,6 +187,36 @@
     </div>
 </div>
 
+<div class="modal fade" id="changeProfile" role="dialog" tabindex="-1" aria-labelledby="changeProfileLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="chageProfileLabel">Change profile:</h5>
+                <button class="btn-close" data-dismiss="modal" aria-label="close">
+                </button>
+            </div>
+            <form action="${pageContext.request.contextPath}/editProfile" method="post">
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <label for="inputNewFirstName" class="col-sm-4 col-form-label">New FirstName</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputNewFirstName" name="newFirstName" required>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputNewLastName" class="col-sm-4 col-form-label">New LastName</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="inputNewLastName" name="newLastName" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary my-3">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <!--Main-->
 <main class="vh-100 bg-gradient-primary" style="background-color: darkblue">
     <div class="d-flex  align-items-center justify-content-center ml-3 mr-3">
@@ -195,7 +225,7 @@
             <img src="/img/profile-icon.webp" style="position: relative; height: 100px; width: 100px">
             <p class="ml-3 mr-3">${pageContext.request.session.getAttribute('firstName')} ${pageContext.request.session.getAttribute('lastName')}</p>
             <a class="btn btn-link btn-outline-primary btn-lg ml-auto mr-auto"
-               href="${pageContext.request.contextPath}/profileEdit" role="button">Edit profile</a>
+               href="${pageContext.request.contextPath}/profileEdit" data-toggle="modal" data-target="#changeProfile" role="button">Edit profile</a>
             <br> <br>
             <a class="btn btn-link btn-lg ml-auto mr-auto" href="${pageContext.request.contextPath}/myPosts"
                role="button">My posts</a>
@@ -219,6 +249,16 @@
         </div>
     </div>
 </main>
+
+<footer class="page-footer font-small blue fixed-bottom ml-3" style="position: absolute; background-color: cornflowerblue">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+        <a href="https://vk.com/koala1101"> vk.com/koala1101</a>
+    </div>
+    <!-- Copyright -->
+
+</footer>
 
 <c:if test="${pageContext.request.session.getAttribute('error') != null}">
 

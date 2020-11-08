@@ -1,8 +1,9 @@
 package ru.ITLab.servlets;
 
 import org.json.JSONArray;
+import ru.ITLab.modules.Comment;
 import ru.ITLab.modules.Post;
-import ru.ITLab.repositories.PostRepository;
+import ru.ITLab.services.GetCommentService;
 import ru.ITLab.services.GetPostService;
 
 import javax.servlet.ServletConfig;
@@ -16,36 +17,44 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/showPost")
-public class ShowPostServlet extends HttpServlet {
-    private GetPostService getPostService;
+@WebServlet("/forum/postId")
+public class PostServlet extends HttpServlet {
     private String BASE_CONTEXT;
+    private GetPostService getPostService;
+    private GetCommentService getCommentService;
+    private String name;
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.sendRedirect(BASE_CONTEXT);
+        HttpSession session = req.getSession();
+        session.setAttribute("post_id", Long.parseLong(req.getParameter("id")));
+        name = getPostService.getById(Long.parseLong(req.getParameter("id"))).get().getName();
+        req.getRequestDispatcher("/WEB-INF/post.jsp").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession();
-        Long id = (Long) session.getAttribute("id");
-        List<Post> allPostsByUser = getPostService.getAllPostsByUser(id);
+        List<Post> allPosts = getPostService.getAllPosts();
+        List<Comment> allCommentByPost = getCommentService.allCommentByPost(name);
         JSONArray arr1 = new JSONArray();
+        JSONArray arr2 = new JSONArray();
 
-        for(Post post : allPostsByUser) {
+        for(Post post : allPosts) {
             JSONArray arr = new JSONArray();
-            arr.put(post.getId());
             arr.put(post.getName());
-            arr.put(post.getComment_id());
-            arr.put(post.getUser_id());
-            arr.put(post.getNameHost());
             arr.put(post.getText());
-
+            arr.put(post.getId());
             arr1.put(arr);
+        }
+
+        for(Comment comment : allCommentByPost){
+            JSONArray arr = new JSONArray();
+            arr.put(comment.getNameHost());
+            arr.put(comment.getText());
+            arr.put(comment.getId());
+            arr2.put(arr);
         }
 
         PrintWriter out = new PrintWriter(new OutputStreamWriter(
@@ -53,7 +62,7 @@ public class ShowPostServlet extends HttpServlet {
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
 
-        out.write(arr1 + "");
+        out.write(arr1 + "&&" + arr2);
         out.flush();
     }
 
@@ -61,5 +70,6 @@ public class ShowPostServlet extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
         BASE_CONTEXT = (String) config.getServletContext().getAttribute("baseContext");
         getPostService = (GetPostService) config.getServletContext().getAttribute("getPostService");
+        getCommentService = (GetCommentService) config.getServletContext().getAttribute("getCommentService");
     }
 }

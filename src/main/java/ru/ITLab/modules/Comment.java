@@ -13,5 +13,5 @@ public class Comment {
     private Long post_id;
     private String nameHost;
     private String text;
-    private String namePost;
+    private String postName;
 }

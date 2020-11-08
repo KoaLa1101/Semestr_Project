@@ -1,20 +1,15 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: koala
-  Date: 07.11.2020
-  Time: 21:40
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
-    <title>Members</title>
+    <title>Post</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css"
           integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
 </head>
 <body>
+
+<!--navigation-->
 <nav class="navbar sticky-top navbar-expand-lg navbar-light">
     <div class="container-fluid" style="background-color: aliceblue">
         <a href="${pageContext.request.contextPath}/" class="navbar-brand ml-3" style="color: blue">Forum for KFU
@@ -125,14 +120,13 @@
                         <div class="col-sm-10">
                             <input type="password" class="form-control" id="inputPasswordSignUp" name="password"
                                    required
-                                   pattern="^(?=.*[A-Z].*[A-Z])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{6,}$">
+                                   pattern="^(?=.*[A-Z].*[A-Z])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{8,}$">
                         </div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputPasswordRepeatSignUp" class="col-sm-4 col-form-label">Repeat password</label>
                         <div class="col-sm-10">
-                            <input type="password" class="form-control" id="inputPasswordRepeatSignUp" required
-                                   pattern="^(?=.*[A-Z].*[A-Z])(?=.*[0-9].*[0-9])(?=.*[a-z].*[a-z].*[a-z]).{6,}$">
+                            <input type="password" class="form-control" id="inputPasswordRepeatSignUp">
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -157,24 +151,50 @@
     </div>
 </div>
 
+<div class="modal fade" id="createCommentModal" role="dialog" tabindex="-1" aria-labelledby="createCommentModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createCommentModalLabel">Create comment:</h5>
+                <button type="button" class="btn-close" data-dismiss="modal" aria-label="close">
+                </button>
+            </div>
+            <form action="${pageContext.request.contextPath}/createComment?id=${pageContext.request.getParameter("id").trim()}" method="post">
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <label for="inputTextCreateComment" class="col-sm-4 col-form-label">Text</label>
+                        <div class="col-sm-10">
+                            <input type="text" id="inputTextCreateComment" name="text" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary my-3">Create</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
-<main>
-    <div class="d-flex justify-content-center" id="allMembers">
+<!--Main-->
+<div>
+    <div class="d-flex justify-content-center" id="chosenPost">
+        <h4 class="ml-3 mr-3">Name of post</h4>
+        <p class="ml-3 mr-3">Here u can see your post</p>
+    </div>
+    <div class="d-flex justify-content-center" style="background-color: aliceblue">
+        <button class="btn btn-outline-dark ml-auto" data-toggle="modal" data-target="#createCommentModal">Add new
+            comment
+        </button>
+    </div>
+
+    <div class="d-flex justfy-content-center" id="showAllComments" style="background-color: aqua">
 
     </div>
-</main>
-<footer class="page-footer font-small blue fixed-bottom ml-3" style="position: absolute; background-color: cornflowerblue">
+    </main>
 
-    <!-- Copyright -->
-    <div class="footer-copyright text-center py-3">© 2020 Copyright:
-        <a href="https://vk.com/koala1101"> vk.com/koala1101</a>
-    </div>
-    <!-- Copyright -->
-
-</footer>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"
-        integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD"
-        crossorigin="anonymous"></script>
-<script src="${pageContext.request.contextPath}/js/members.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js"
+            integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD"
+            crossorigin="anonymous"></script>
+    <script src="/js/postWithComments.js" type="text/javascript"></script>
 </body>
 </html>

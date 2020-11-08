@@ -36,6 +36,7 @@ public class MyServletContextListener implements ServletContextListener {
         GetPostService getPostService = new GetPostServiceImpl(postRepository);
         CommentRepository commentRepository = new CommentRepositoryJdbcImpl(dataSource);
         CreateCommentService createCommentService = new CreateCommentServiceImpl(commentRepository);
+        GetCommentService getCommentService = new GetCommentServiceImpl(commentRepository);
 
         servletContext.setAttribute("signInService", signInService);
         servletContext.setAttribute("signUpService", signUpService);
@@ -44,6 +45,7 @@ public class MyServletContextListener implements ServletContextListener {
         servletContext.setAttribute("createPostService", createPostService);
         servletContext.setAttribute("getPostService", getPostService);
         servletContext.setAttribute("createCommentService", createCommentService);
+        servletContext.setAttribute("getCommentService", getCommentService);
 
     }
 

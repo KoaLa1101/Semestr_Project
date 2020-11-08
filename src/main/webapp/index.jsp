@@ -150,9 +150,21 @@
 <main>
     <img  id="mainPicture" class="d-block container-fluid" style="position: absolute" src="/img/kfu-background.jpg" alt="">
     <div  class="d-flex align-items-center justify-content-center" >
-        <h2 class="text-center text-justify text-light font-italic ml-10 mr-10 " style="position: relative; padding-top: 350px">You have questions? Or are you willing to help others? Then you have come to the address </h2>
+        <h2 class="text-center text-justify text-light font-italic ml-5 mr-5 " style="position: relative; padding-top: 250px">You have questions? Or are you willing to help others? Then you have come to the address </h2>
     </div>
 </main>
+
+<!-- Footer -->
+<footer class="page-footer font-small blue fixed-bottom ml-3" style="position: absolute; background-color: cornflowerblue">
+
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">© 2020 Copyright:
+        <a href="https://vk.com/koala1101"> vk.com/koala1101</a>
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
 
 <c:if test="${pageContext.request.session.getAttribute('error') != null}">
 

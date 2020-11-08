@@ -21,7 +21,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
     private final static String SQL_GET_USER_BY_EMAIL = "select * from users where email=?";
     private final static String SQL_GET_USER_BY_ID = "select * from users where id=?";
     private final static String SQL_DELETE_USER = "delete from users where id=?";
-    private final static String SQL_CHANGE_NAME = "update users set ";
+    private final static String SQL_CHANGE_NAME = "update users set firstName=?, lastName=? where id=?";
 
     public UsersRepositoryJdbcImpl(DataSource dataSource) {
         this.dataSource = dataSource;
@@ -229,6 +229,7 @@ public class UsersRepositoryJdbcImpl implements UsersRepository {
             statement = connection.prepareStatement(SQL_CHANGE_NAME, Statement.RETURN_GENERATED_KEYS);
             statement.setString(1, enity.getFirstName());
             statement.setString(2, enity.getLastName());
+            statement.setLong(3, enity.getId());
 
             int affectedRows = statement.executeUpdate();
 

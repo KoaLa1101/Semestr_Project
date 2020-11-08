@@ -35,7 +35,7 @@ public class CreatePostServlet extends HttpServlet {
         Long id = (Long) createPostService.createPost(form);
 
         if(id>=0){
-            resp.sendRedirect(BASE_CONTEXT + "/profile");
+            resp.sendRedirect(BASE_CONTEXT + "profile");
         }
         else{
             req.getSession().setAttribute("error", id);

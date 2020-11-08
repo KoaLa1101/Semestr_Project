@@ -34,7 +34,7 @@ public class SignUpServlet extends HttpServlet {
         form.setEmail(req.getParameter("email"));
         form.setPassword(req.getParameter("password"));
 
-        short year = Short.parseShort(req.getParameter("dateOfBirth").split("-")[0]);
+        int year = Integer.parseInt(req.getParameter("dateOfBirth").split("-")[0]);
         short month = Short.parseShort(req.getParameter("dateOfBirth").split("-")[1]);
         short day = Short.parseShort(req.getParameter("dateOfBirth").split("-")[2]);
         form.setDateOfBirth(new Date(year, month, day));

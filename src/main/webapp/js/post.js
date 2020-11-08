@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
     let lastPost = document.getElementById('lastPost');
     async function getData(){
-        let url = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "/showPost";
+        let url = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/')) + "showPost";
 
         try {
             let response = await fetch(url, {
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             let result = await response.json();
-            console.log(result[0][1]);
+            console.log(window.location.search);
             await showLastPostByUser(result);
 
         } catch (e) {
