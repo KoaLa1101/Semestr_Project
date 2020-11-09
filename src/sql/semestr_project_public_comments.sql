@@ -1,0 +1,14 @@
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (1, 1, 2, 'Rinat', 'I want to ask u. Who am I?', 'I''m ready to answer on your questions ');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (2, 1, 3, 'Rinat', 'Hi, I''m ready to help. Your question?', 'I need in help with geometry');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (3, 1, 1, 'Rinat', 'hmmm', 'Help with documents');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (4, 1, 1, 'Rinat', 'And what?', 'Help with documents');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (5, 1, 1, 'Rinat', 'I''m waiting', 'Help with documents');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (6, 1, 1, 'Rinat', '/', 'Help with documents');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (7, 1, 3, 'Rinat', '?', 'I need in help with geometry');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (8, 2, 3, 'Bulat', 'idk', 'I need in help with geometry');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (9, 2, 2, 'Bulat', 'I can say u only one phrase. F', 'I''m ready to answer on your questions ');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (10, 2, 2, 'Bulat', 'GG', 'I''m ready to answer on your questions ');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (11, 2, 1, 'Bulat', 'he-he', 'Help with documents');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (12, 3, 2, 'Alina', 'hi-hi', 'I''m ready to answer on your questions ');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (13, 3, 1, 'Alina', 'i''m here', 'Help with documents');
+INSERT INTO public.comments (id, user_id, post_id, namehost, text, postname) VALUES (14, 3, 3, 'Alina', 'idk, too', 'I need in help with geometry');

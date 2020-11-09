@@ -1,0 +1,3 @@
+INSERT INTO public.posts (id, name, user_id, namehost, text, comment_id) VALUES (1, 'Help with documents', 2, 'Bulat', 'I think, that everybody has some problems with documents in university. Who ready to help me with insert data?', '{0}');
+INSERT INTO public.posts (id, name, user_id, namehost, text, comment_id) VALUES (2, 'I''m ready to answer on your questions ', 2, 'Bulat', 'I''m ready to answer on your questions  with programming', '{0}');
+INSERT INTO public.posts (id, name, user_id, namehost, text, comment_id) VALUES (3, 'I need in help with geometry', 3, 'Alina', 'I have some problems. Who can help me?', '{0}');
